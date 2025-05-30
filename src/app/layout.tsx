@@ -1,6 +1,8 @@
 import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import { ClerkProvider, SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs"
+import SupabaseProvider from "@/lib/supabase-providers"
+import { UserSync } from "@/lib/user-sync"
 import "./globals.css"
 
 const geistSans = Geist({
@@ -29,6 +31,8 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
+          <SupabaseProvider>
+            <UserSync />
           <header className="fixed top-0 w-full bg-white border-b border-gray-200 z-50 py-4">
             <div className="container mx-auto px-4 flex justify-between items-center">
               <SignedOut>
@@ -45,6 +49,7 @@ export default function RootLayout({
           <main className="pt-20">
             {children}
           </main>
+          </SupabaseProvider>
         </body>
       </ClerkProvider>
     </html>
